@@ -43,6 +43,8 @@ uint8_t counter = 0;
 char data[150];
 char sensor_position[150];
 
+bool b_line = true;
+
 // function prototypes
 void calibrate(void);
 void getSensorVal(void);
@@ -111,7 +113,11 @@ void getSensorVal() {
 
   for (int i = 0; i < IR; i++) {
     sensorRaw[i] = analogRead(sensorPin[i]);
-    sensor[i] = constrain( map( analogRead( sensorPin[i] ), sensorMin[i], sensorMax[i], KS, 0 ), 0, KS);
+    if (b_line){
+      sensor[i] = constrain( map( analogRead( sensorPin[i] ), sensorMin[i], sensorMax[i], KS, 0 ), 0, KS);
+    } else {
+      sensor[i] = constrain( map( analogRead( sensorPin[i] ), sensorMin[i], sensorMax[i], 0, KS ), 0, KS);
+    }
     
     weightedSum += sensor[i] * (i-2);
     sum += sensor[i];
@@ -122,6 +128,10 @@ void getSensorVal() {
   if ( lineDetected ) posX = (weightedSum / sum)*5;
   else if ( posX < 0) posX = 1;
   else posX = -1;
+
+  if(abs(posX - PrevErr) > SWITCHING_THRESHOLD){
+    b_line = !b_line;
+  }
 
 }
 
