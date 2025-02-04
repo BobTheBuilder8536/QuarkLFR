@@ -5,6 +5,7 @@
 #define IR 5          // no. of IR sensors
 #define KS 1000       // sensor factor used for calibration
 #define SENS 450      // sensitivity of IR for line detection
+#define SWITCHING_THRESHOLD 2000 //Change in error needed to trigger an inversion
 
 #define CALSPEED 40   // calibration speed of motors
 #define FWDSPEED 40   // forward speed of motors
@@ -43,7 +44,7 @@ uint8_t counter = 0;
 char data[150];
 char sensor_position[150];
 
-bool b_line = true;
+bool b_line = true; //Black line  by default
 
 // function prototypes
 void calibrate(void);
