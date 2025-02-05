@@ -13,11 +13,11 @@
 
 // MotorA = LEFT
 // MotorB = RIGHT
-#define AIN1 7
-#define AIN2 6       // pwm pin used to control speed of MotorA
-#define BIN2 5       // pwm pin used to control speed of MotorA
-#define BIN1 4
-#define STARTSWITCH 2
+#define AIN1 8
+#define AIN2 7       // pwm pin used to control speed of MotorA
+#define BIN2 9       // pwm pin used to control speed of MotorA
+#define BIN1 10
+#define STARTSWITCH 12
 
 #define KPID 1     // PID constant
 #define KP 1.5      // proportional constant
@@ -26,7 +26,7 @@
 
 int16_t P, I, D, PID, PrevErr = 0;
 
-const uint8_t sensorPin[IR] = { A0, A1, A2, A3, A4 };     // IR sensor pins
+const uint8_t sensorPin[IR] = { A1, A2, A3, A6, A7 };     // IR sensor pins
 int sensor[IR], sensorMin[IR], sensorMax[IR] = {0}, sensorRaw[IR];  // sensor value and limits array
 
 int weightedSum = 0;
@@ -81,15 +81,21 @@ void loop() {
   getSensorVal();
 
   // weightedSum = (sensor[0] * -2) + (sensor[4] * 2);
-  // sum = sensor[0] + sensor[4];
+  // sum = sensor[0] + sensor[
+
+//TEST SUITE
+// UNCOMMENT THE LINES BELOW TO ENABLE THE TEST SUITE
+// ----------------------------------------------------------------
+//  test_suite();
+//-----------------------------------------------------------------
 
 
-  if (testing) test_suite();
-  else {
-    motorDrive();
-    calculatePID();
-  }
-
+//ACTUAL RUN
+//UNCOMMENT THE LINES BELOW TO ACTIVATE THE ACTUAL RUN
+//-----------------------------------------------------------------
+  motorDrive();
+  calculatePID();
+//-----------------------------------------------------------------
   weightedSum = 0;
   sum = 0;
 } 
